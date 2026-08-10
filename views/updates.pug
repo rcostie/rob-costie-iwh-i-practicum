@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title= pageTitle
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    h1 Update Custom Object Form
+    a(href='/') Return to the homepage
+    form(method='POST', action='/update-cobj')
+      label(for='name') Name
+      br
+      input(type='text', id='name', name='name', required)
+      br
+      br
+      label(for='type') Type
+      br
+      input(type='text', id='type', name='type', required)
+      br
+      br
+      label(for='brand') Brand
+      br
+      input(type='text', id='brand', name='brand', required)
+      br
+      br
+      button(type='submit') Create Whiskey
