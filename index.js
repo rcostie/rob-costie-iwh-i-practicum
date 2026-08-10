@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const app = express();
+require('dotenv').config();
 
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
@@ -68,4 +69,31 @@ app.post('/update', async (req, res) => {
 
 
 // * Localhost
+app.get('/update-cobj', (req, res) => {
+  res.render('updates', { pageTitle: 'Update Custom Object Form | Integrating With HubSpot I Practicum' });
+});
+app.post('/update-cobj', async (req, res) => {
+  const newWhiskey = {
+    properties: {
+      name: req.body.name,
+      type: req.body.type,
+      brand: req.body.brand
+    }
+  };
+
+  const createWhiskey = 'https://api.hubapi.com/crm/v3/objects/2-67278834';
+
+  const headers = {
+    Authorization: `Bearer ${process.env.PRIVATE_APP_TOKEN}`,
+    'Content-Type': 'application/json'
+  };
+
+  try {
+    await axios.post(createWhiskey, newWhiskey, { headers });
+    res.redirect('/');
+  } catch (error) {
+    console.error(error.response.data);
+    res.status(500).send('Error creating whiskey record');
+  }
+});
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
