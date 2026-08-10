@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= pageTitle
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    h1 Whiskeys
+    a(href='/update-cobj') Add to this table
+    table
+      thead
+        tr
+          th Name
+          th Type
+          th Brand
+      tbody
+        each whiskey in whiskeys
+          tr
+            td= whiskey.properties.name
+            td= whiskey.properties.type
+            td= whiskey.properties.brand

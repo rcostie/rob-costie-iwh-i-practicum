@@ -96,4 +96,21 @@ app.post('/update-cobj', async (req, res) => {
     res.status(500).send('Error creating whiskey record');
   }
 });
+app.get('/', async (req, res) => {
+  const whiskeysUrl = 'https://api.hubapi.com/crm/v3/objects/2-67278834?properties=name,type,brand';
+
+  const headers = {
+    Authorization: `Bearer ${process.env.PRIVATE_APP_TOKEN}`,
+    'Content-Type': 'application/json'
+  };
+
+  try {
+    const response = await axios.get(whiskeysUrl, { headers });
+    const whiskeys = response.data.results;
+    res.render('homepage', { pageTitle: 'Whiskeys | Integrating With HubSpot I Practicum', whiskeys });
+  } catch (error) {
+    console.error(error.response.data);
+    res.status(500).send('Error retrieving whiskeys');
+  }
+});
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
